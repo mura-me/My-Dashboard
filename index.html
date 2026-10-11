@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f2eb">
+<title>My Free-Time Companion</title>
+<style>
+:root{--bg:#f5f2eb;--paper:#fffdf8;--ink:#252720;--muted:#72746b;--line:#e4e0d6;--accent:#405c4b;--accent2:#e5ecdf;--shadow:0 8px 28px rgba(42,45,34,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:1120px;margin:auto;padding:24px 18px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:4px 0 24px}
+.brand{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:750}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:650}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:white}.btn:hover{filter:brightness(.97)}
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:center}
+.eyebrow{font-size:12px;letter-spacing:.12em;font-weight:800;color:var(--accent);text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.06;letter-spacing:-.04em;margin:12px 0}
+.sub{color:var(--muted);max-width:620px}
+.hero-card{background:var(--accent2);border-radius:18px;padding:22px}
+.hero-card .big{font-size:36px;font-weight:800;letter-spacing:-.04em}
+.progress{height:7px;background:#d4dccd;border-radius:99px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:34px 0 16px}
+h2{margin:0;font-size:23px;letter-spacing:-.025em}.small{font-size:13px;color:var(--muted)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.search{flex:1;min-width:200px;background:var(--paper);border:1px solid var(--line);padding:12px 14px;border-radius:12px}
+select{background:var(--paper);border:1px solid var(--line);padding:12px;border-radius:12px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.activity{border:1px solid var(--line);border-radius:18px;background:var(--paper);padding:18px;text-align:left;min-height:156px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 8px rgba(42,45,34,.025);transition:transform .15s,border-color .15s}
+.activity:hover{transform:translateY(-2px);border-color:#a8b6a6}.activity.selected{border-color:var(--accent);box-shadow:0 0 0 2px #dce5d8}
+.card-top{display:flex;justify-content:space-between;align-items:center}.emoji{font-size:25px}.number{font-size:12px;color:var(--muted)}
+.card-title{font-weight:760;font-size:17px;line-height:1.25}.tag{font-size:10px;letter-spacing:.08em;font-weight:800;color:var(--accent);text-transform:uppercase}
+.card-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+.detail{margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,32px);box-shadow:var(--shadow)}
+.detail h2{font-size:clamp(24px,4vw,32px);margin:5px 0 12px}.detail p{color:#4d5048}
+.detail-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;margin-top:22px}
+.note-area{width:100%;min-height:120px;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fffefb;color:var(--ink)}
+.step{background:var(--accent2);border-radius:14px;padding:16px;margin:16px 0}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.link-row{display:flex;gap:8px;margin-top:8px}.link-row input{min-width:0;flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fffefb}
+.saved-links{padding-left:18px}.saved-links a{color:var(--accent);overflow-wrap:anywhere}
+.journal{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.journal-day{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:5px 0}
+.journal-entry{background:#f7f5ef;border:1px solid var(--line);border-radius:13px;padding:13px 14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.journal-time{font-size:11px;color:var(--muted);margin-bottom:6px}
+.idea-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.idea-input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fffefb;color:var(--ink);margin-top:6px}
+@media(max-width:600px){.idea-form-grid{grid-template-columns:1fr}}
+footer{margin-top:32px;color:var(--muted);font-size:12px;text-align:center}
+.empty{grid-column:1/-1;padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#252720;color:white;padding:10px 16px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:5}.toast.show{opacity:1}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.wrap{padding:14px 12px 42px}header{align-items:flex-start;flex-direction:column}.grid{gap:9px}.activity{padding:13px;min-height:145px}.card-title{font-size:15px}.section-head{align-items:start;flex-direction:column}.top-actions{width:100%}.top-actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">A little space for a life well-lived</div>
+  <div class="top-actions">
+    <button class="btn" id="manageIdeasBtn">＋ Add idea</button>
+    <button class="btn" id="manageHiddenBtn">Hidden ideas <span id="hiddenCount">0</span></button>
+    <button class="btn" id="exportBtn">Export backup</button>
+    <button class="btn" id="importBtn">Import backup</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
+</header>
+<section class="hero">
+  <div>
+    <div class="eyebrow">Your personal dashboard</div>
+    <h1>What shall I do<br>with my time?</h1>
+    <p class="sub">When you're bored or low on motivation, you don't need to figure out your whole life. Pick one small thing and begin.</p>
+    <div class="hero-buttons">
+      <button class="btn primary" id="surpriseBtn">✦ Surprise me</button>
+      <button class="btn" id="clearBtn">Clear current selection</button>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="small">ACTIVITIES EXPLORED</div>
+    <div class="big"><span id="doneCount">0</span><span style="font-size:20px;color:var(--muted)"> / 14</span></div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div class="small" id="progressText">Every small step counts.</div>
+  </div>
+</section>
+<div class="section-head">
+  <div><h2>Choose what sounds good</h2><div class="small">Tap a card to open its reminder and next step.</div></div>
+  <div class="small" id="resultCount">14 activities</div>
+</div>
+<div class="controls">
+  <input class="search" id="search" type="search" placeholder="Search activities…">
+  <select id="category">
+    <option value="all">All categories</option>
+    <option>Creativity</option><option>Career</option><option>Family</option><option>Travel</option><option>Food</option><option>Finance</option><option>Home</option><option>Connection</option><option>Research</option>
+  </select>
+</div>
+<div class="grid" id="grid"></div>
+<section class="detail" id="hiddenPanel" hidden><div class="section-head" style="margin:0 0 14px"><div><h2>Hidden activities</h2><div class="small">These are out of your main dashboard, not deleted. Restore any of them whenever you like.</div></div><button class="btn" id="closeHiddenBtn">Close</button></div><div id="hiddenList" class="grid"></div></section>
+<section class="detail" id="detail" hidden></section>
+<section class="detail" id="ideaEditor" hidden>
+  <div class="eyebrow" id="editorEyebrow">GROW YOUR IDEA LIBRARY</div>
+  <h2 id="editorTitle">Add a new idea</h2>
+  <p class="small">Create an activity for your future self. You can edit or hide ideas later.</p>
+  <form id="ideaForm">
+    <div class="idea-form-grid">
+      <div>
+        <label for="ideaTitle"><strong>Title</strong></label>
+        <input class="idea-input" id="ideaTitle" maxlength="90" required placeholder="e.g. Learn pottery">
+        <label for="ideaCategory" style="display:block;margin-top:14px"><strong>Category</strong></label>
+        <select id="ideaCategory" style="width:100%;margin-top:6px">
+          <option>Creativity</option><option>Career</option><option>Family</option><option>Travel</option><option>Food</option><option>Finance</option><option>Home</option><option>Connection</option><option>Research</option><option>Health & Fitness</option><option>Learning</option><option>Other</option>
+        </select>
+        <label for="ideaEmoji" style="display:block;margin-top:14px"><strong>Emoji</strong></label>
+        <input class="idea-input" id="ideaEmoji" maxlength="8" value="💡" placeholder="💡">
+      </div>
+      <div>
+        <label for="ideaDesc"><strong>Explanation</strong></label>
+        <textarea class="note-area" style="margin-top:6px" id="ideaDesc" required placeholder="Why do I want to do this? What could it involve?"></textarea>
+        <label for="ideaStart" style="display:block;margin-top:14px"><strong>First small step</strong></label>
+        <textarea class="note-area" style="min-height:85px;margin-top:6px" id="ideaStart" required placeholder="What can I do in the next 15–30 minutes?"></textarea>
+        <label for="ideaRemember" style="display:block;margin-top:14px"><strong>Reminder to myself (optional)</strong></label>
+        <textarea class="note-area" style="min-height:85px;margin-top:6px" id="ideaRemember" placeholder="A sentence to encourage future me…"></textarea>
+      </div>
+    </div>
+    <div class="actions"><button class="btn primary" type="submit" id="saveIdeaBtn">Save idea</button><button class="btn" type="button" id="cancelIdeaBtn">Cancel</button></div>
+  </form>
+</section>
+<footer>Your ideas, dated journal entries, links, and progress are saved in this browser on this device. Use Export backup regularly to keep a copy.</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const activities = [
+{n:1,title:"Build a LEGO City",category:"Creativity",emoji:"🧱",desc:"Buy multiple LEGO sets and build a connected village or city that grows over time. Record time-lapses, city tours and building progress, and consider creating a YouTube channel.",start:"Plan your first street or neighbourhood and identify one set to begin with.",remember:"I can turn a simple hobby into a long-term creative project."},
+{n:2,title:"Learn Videography",category:"Creativity",emoji:"🎥",desc:"Learn camera angles, lighting, composition, movement and editing. Practise with everyday objects, LEGO builds or miniature scenes, then upload your best work.",start:"Record a 30-second video using your current phone or camera.",remember:"I don't need to become an expert before I start recording."},
+{n:3,title:"Explore Cameras & Gadgets",category:"Research",emoji:"📷",desc:"Research cameras, microphones, tripods, lighting and recording gadgets. Study how YouTubers create high-quality videos and understand their setups before buying equipment.",start:"Watch one behind-the-scenes creator setup video and note what equipment you actually need.",remember:"Research should help me create something, not become a substitute for creating it."},
+{n:4,title:"Explore LinkedIn & AI Learning",category:"Career",emoji:"💼",desc:"Explore what your professional connections are learning and achieving. Identify useful SAP, AI or technology skills and turn inspiration into practical learning rather than comparing yourself with others.",start:"Choose one skill that could improve your career and spend 20 minutes learning it.",remember:"Use other people's progress as inspiration, not as a reason to put yourself down."},
+{n:5,title:"Create AI Videos",category:"Creativity",emoji:"🎞️",desc:"Learn image-to-video generation, character animation, cinematic camera movements, sound effects and editing. Work towards your goal of transforming manga panels into cinematic AI videos.",start:"Choose one manga panel and create your first short animation experiment. Use material you have permission to publish.",remember:"Watching other people create amazing videos will only inspire me temporarily. Learning to create my own will give me something lasting."},
+{n:6,title:"Progress My Story",category:"Creativity",emoji:"📖",desc:"Return to the story you've already started. Develop characters, world-building, plot and chapters. Use a light-novel format so you can progress without worrying about illustrating and serialising every scene.",start:"Open your existing story and write one paragraph, scene or chapter outline.",remember:"You already have a story waiting to be told. Give it the time it deserves."},
+{n:7,title:"Find Gifts for Loved Ones",category:"Family",emoji:"🎁",desc:"Explore thoughtful, personalised or unusual gifts for your wife, daughter, family and friends. Keep a list of ideas, prices and links for birthdays, anniversaries and special occasions.",start:"Think of one person and find three gift ideas they would genuinely appreciate.",remember:"A thoughtful gift takes time to discover. Use your free time now to make someone happy later."},
+{n:8,title:"Plan Future Vacations",category:"Travel",emoji:"🧳",desc:"Review national holidays, long weekends and available annual leave. Coordinate with your client, shortlist destinations, research accommodation and activities, and plan trips well in advance.",start:"Find your next possible long weekend and shortlist two destinations.",remember:"A great vacation often begins months before the journey."},
+{n:9,title:"Plan an Exotic Meal",category:"Food",emoji:"🍲",desc:"Find an interesting dish or cuisine you've never cooked before. Check ingredients, learn the technique and prepare a plan for a special lunch the following day.",start:"Choose one new dish, check the recipe and make an ingredient list.",remember:"Tomorrow's lunch can be more exciting if I start planning it today."},
+{n:10,title:"Explore Auroville Restaurants",category:"Food",emoji:"🍽️",desc:"Research restaurants and cafés around Auroville. Compare menus, signature dishes, prices and ambience. Visit promising places on your bike beforehand if you want to discover somewhere special to take your family.",start:"Shortlist three places suitable for a family outing and save their menus.",remember:"Put in a little effort beforehand so that when the opportunity comes, you already have something exciting to suggest."},
+{n:11,title:"Learn About Investments",category:"Finance",emoji:"📈",desc:"Watch educational videos about stocks, mutual funds, ETFs, bonds, gold, market movements and economic news. Focus on understanding investment principles, risks and long-term wealth creation instead of chasing returns.",start:"Watch one educational lesson and write down three things you learned.",remember:"The goal isn't to invest in something new every time I feel bored. It's to become a better-informed investor."},
+{n:12,title:"Analyse Investments in Excel",category:"Finance",emoji:"📊",desc:"Use your laptop and Excel to track existing investments, returns, asset allocation and portfolio overlap. Research potential investments, document your thesis and risks, and decide whether they merit further consideration.",start:"Update your portfolio spreadsheet or analyse one investment you've been considering.",remember:"Analyse first, document my reasoning, understand the risks, and then decide."},
+{n:13,title:"Improve My Home",category:"Home",emoji:"🏡",desc:"Identify household repairs, reorganise rooms and cupboards, clean neglected areas, explore décor ideas or plan painting and DIY projects. Arrange professional help for repairs that need it.",start:"Walk through your home and write down three things that need attention.",remember:"A little effort today can make home cleaner, more comfortable and more enjoyable."},
+{n:14,title:"Reconnect With People",category:"Connection",emoji:"☎️",desc:"Call an old friend, former colleague, schoolmate or relative. Check in on someone you haven't spoken to in a while. You don't need a special occasion or a favour to ask; just make the effort to stay connected.",start:"Pick one person from your contacts and give them a call.",remember:"Friendships don't always end because people stop caring. Sometimes, life simply gets busy."}
+];
+const KEY="freeTimeCompanion_v2";
+let state={done:[],notes:{},links:{},selected:null,customIdeas:[],hidden:[]};
+try{
+  let saved=JSON.parse(localStorage.getItem(KEY)||"null");
+  // Migrate data from the first dashboard version, if present.
+  if(!saved){
+    const old=JSON.parse(localStorage.getItem("freeTimeCompanion_v1")||"null");
+    if(old)saved=old;
+  }
+  if(saved)state={...state,...saved};
+  if(!Array.isArray(state.customIdeas))state.customIdeas=[];
+  if(!Array.isArray(state.hidden))state.hidden=[];
+  // Older versions stored one editable string per activity. Preserve it as a dated entry.
+  for(const [id,val] of Object.entries(state.notes||{})){
+    if(typeof val==="string"){
+      state.notes[id]=val.trim()?[{date:new Date().toISOString(),text:val}]:[];
+    }else if(!Array.isArray(val)){state.notes[id]=[]}
+  }
+}catch(e){}
+const $=id=>document.getElementById(id);
+let editingCustomId=null;
+function allActivities(){return [...activities,...state.customIdeas.map(a=>({...a,custom:true}))]}
+function activeActivities(){return allActivities().filter(a=>!state.hidden.includes(a.n))}
+function findActivity(n){return allActivities().find(a=>a.n===n)}
+function persist(){
+  try{localStorage.setItem(KEY,JSON.stringify(state))}
+  catch(e){toast("Could not save in this browser. Export a backup instead.")}
+  renderProgress()
+}
+function toast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}
+function renderProgress(){
+  const active=activeActivities(),total=active.length,done=active.filter(a=>state.done.includes(a.n)).length;
+  $("doneCount").textContent=done;
+  $("progressBar").style.width=(total?done/total*100:0)+"%";
+  $("progressText").textContent=total&&done===total?`All ${total} visible activities explored — choose any one to revisit.`:done?`${total-done} visible activities left to explore. No rush.`:"Every small step counts.";
+  $("hiddenCount").textContent=state.hidden.length;
+  const count=visibleActivities().length;
+  $("resultCount").textContent=`${count} ${count===1?"activity":"activities"}`;
+}
+function visibleActivities(){
+  const q=$("search").value.trim().toLowerCase(),c=$("category").value;
+  return activeActivities().filter(a=>(c==="all"||a.category.toLowerCase()===c.toLowerCase())&&(!q||(a.title+" "+a.desc+" "+a.category).toLowerCase().includes(q)));
+}
+function renderGrid(){
+  const list=visibleActivities();
+  $("resultCount").textContent=`${list.length} ${list.length===1?"activity":"activities"}`;
+  $("grid").innerHTML=list.length?list.map(a=>`<button class="activity ${state.selected===a.n?"selected":""}" data-id="${a.n}"><div class="card-top"><span class="emoji">${escapeHtml(a.emoji)}</span><span class="number">${state.done.includes(a.n)?"✓ Explored":String(a.n).padStart(2,"0")}</span></div><span class="tag">${escapeHtml(a.category)}${a.custom?" · MY IDEA":""}</span><span class="card-title">${escapeHtml(a.title)}</span><span class="card-bottom"><span>${state.selected===a.n?"Viewing reminder":"Open reminder"}</span><span>↗</span></span></button>`).join(""):`<div class="empty">No activities match your search. Try another word or category, or check Hidden activities.</div>`;
+  $("grid").querySelectorAll("[data-id]").forEach(b=>b.addEventListener("click",()=>selectActivity(Number(b.dataset.id))));
+  renderHiddenPanel();
+}
+function renderHiddenPanel(){
+  const hidden=allActivities().filter(a=>state.hidden.includes(a.n));
+  $("hiddenCount").textContent=hidden.length;
+  $("hiddenList").innerHTML=hidden.length?hidden.map(a=>`<div class="activity"><div class="card-top"><span class="emoji">${escapeHtml(a.emoji)}</span><span class="number">Hidden</span></div><span class="tag">${escapeHtml(a.category)}${a.custom?" · MY IDEA":""}</span><span class="card-title">${escapeHtml(a.title)}</span><div class="actions"><button class="btn primary" data-restore="${a.n}">Restore</button></div></div>`).join(""):`<div class="empty">Nothing hidden right now. Hide an activity and it will be kept here for later.</div>`;
+  $("hiddenList").querySelectorAll("[data-restore]").forEach(b=>b.addEventListener("click",()=>{const n=Number(b.dataset.restore);state.hidden=state.hidden.filter(x=>x!==n);persist();renderGrid();renderHiddenPanel();toast("Activity restored to your dashboard")}));
+}
+function escapeHtml(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function formatDay(iso){
+  const d=new Date(iso);
+  if(Number.isNaN(d.getTime()))return "Date not recorded";
+  return d.toLocaleDateString(undefined,{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+}
+function formatTime(iso){
+  const d=new Date(iso);
+  return Number.isNaN(d.getTime())?"":d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+}
+function renderJournal(a){
+  const entries=Array.isArray(state.notes[a.n])?state.notes[a.n]:[];
+  if(!entries.length)return `<p class="small">Your saved notes and progress updates will appear here, grouped by date.</p>`;
+  const grouped={};
+  entries.forEach((entry,i)=>{
+    const key=formatDay(entry.date||entry.timestamp||"");
+    if(!grouped[key])grouped[key]=[];
+    grouped[key].push({...entry,_index:i});
+  });
+  return `<div class="journal">${Object.entries(grouped).map(([day,items])=>`<div><div class="journal-day">${escapeHtml(day)}</div>${items.map(entry=>`<article class="journal-entry"><div class="journal-time">${escapeHtml(formatTime(entry.date||entry.timestamp||""))}</div><div>${escapeHtml(entry.text)}</div></article>`).join("")}</div>`).join("")}</div>`;
+}
+function renderDetail(){
+  const a=findActivity(state.selected),d=$("detail");
+  if(!a){d.hidden=true;d.innerHTML="";return}
+  d.hidden=false;
+  const links=state.links[a.n]||[];
+  d.innerHTML=`<div class="eyebrow">Activity ${a.n} · ${escapeHtml(a.category)}${a.custom?" · MY IDEA":""}</div><h2>${escapeHtml(a.emoji)} ${escapeHtml(a.title)}</h2><p>${escapeHtml(a.desc)}</p><div class="step"><strong>Your next small step</strong><p style="margin:7px 0 0">${escapeHtml(a.start)}</p></div>${a.remember?`<p><strong>Remember</strong><br>${escapeHtml(a.remember)}</p>`:""}${`<div class="actions">${a.custom?`<button class="btn" id="editIdeaBtn">Edit idea</button>`:""}<button class="btn" id="hideActivityBtn">Hide activity</button></div>`}<div class="detail-grid"><div><label for="noteDraft"><strong>Notes & progress journal</strong></label><p class="small">Each time you save, it becomes a dated entry below. Saved entries are read-only, so you can look back at your progress.</p><textarea class="note-area" id="noteDraft" placeholder="What did I do today? What did I learn? What should I try next?"></textarea><div class="actions"><button class="btn primary" id="saveNote">Save dated note</button><button class="btn" id="markDone">${state.done.includes(a.n)?"✓ Explored — undo":"Mark as explored"}</button></div><div id="journalArea">${renderJournal(a)}</div></div><div><strong>Useful links</strong><p class="small">Save articles, videos, recipes, places, or resources to revisit.</p><div class="link-row"><input id="linkUrl" type="url" placeholder="https://…"><button class="btn" id="addLink">Add</button></div>${links.length?`<ul class="saved-links">${links.map((l,i)=>`<li><a href="${escapeHtml(l)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l)}</a> <button class="btn" style="padding:2px 7px;font-size:12px" data-remove="${i}" aria-label="Remove link">×</button></li>`).join("")}</ul>`:`<p class="small">No saved links yet.</p>`}</div></div>`;
+  $("saveNote").addEventListener("click",()=>{
+    const text=$("noteDraft").value.trim();
+    if(!text){toast("Write a note or progress update first");return}
+    if(!Array.isArray(state.notes[a.n]))state.notes[a.n]=[];
+    state.notes[a.n].push({date:new Date().toISOString(),text});
+    persist();renderDetail();toast("Dated note saved");
+  });
+  $("markDone").addEventListener("click",()=>{state.done=state.done.includes(a.n)?state.done.filter(n=>n!==a.n):[...state.done,a.n];persist();renderGrid();renderDetail()});
+  if(a.custom)$("editIdeaBtn").addEventListener("click",()=>openIdeaEditor(a.n));
+  $("hideActivityBtn").addEventListener("click",()=>{state.hidden=[...new Set([...state.hidden,a.n])];state.selected=null;persist();renderGrid();renderDetail();renderHiddenPanel();toast("Activity hidden — you can restore it anytime")});
+  $("addLink").addEventListener("click",()=>{let v=$("linkUrl").value.trim();if(!v)return;try{const u=new URL(v);if(!["http:","https:"].includes(u.protocol))throw 0;state.links[a.n]=[...(state.links[a.n]||[]),u.href];persist();renderDetail();toast("Link saved")}catch(e){toast("Enter a valid http or https link")}});
+  d.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>{state.links[a.n].splice(Number(b.dataset.remove),1);persist();renderDetail()}));
+}
+function selectActivity(n){state.selected=state.selected===n?null:n;renderGrid();renderDetail();if(state.selected){setTimeout(()=>$("detail").scrollIntoView({behavior:"smooth",block:"start"}),30)}}
+$("search").addEventListener("input",renderGrid);$("category").addEventListener("change",renderGrid);
+$("manageHiddenBtn").addEventListener("click",()=>{$("hiddenPanel").hidden=!$("hiddenPanel").hidden;if(!$("hiddenPanel").hidden){renderHiddenPanel();$("hiddenPanel").scrollIntoView({behavior:"smooth",block:"start"})}});
+$("closeHiddenBtn").addEventListener("click",()=>{$("hiddenPanel").hidden=true});
+$("surpriseBtn").addEventListener("click",()=>{const pool=visibleActivities();if(!pool.length){toast("No activities match your filters");return}const options=pool.filter(a=>!state.done.includes(a.n));const chosen=(options.length?options:pool)[Math.floor(Math.random()*(options.length?options:pool).length)];state.selected=chosen.n;renderGrid();renderDetail();$("detail").scrollIntoView({behavior:"smooth",block:"start"})});
+$("clearBtn").addEventListener("click",()=>{state.selected=null;renderGrid();renderDetail();window.scrollTo({top:0,behavior:"smooth"})});
+$("exportBtn").addEventListener("click",()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="free-time-companion-backup.json";a.click();URL.revokeObjectURL(url);toast("Backup exported")});
+$("importBtn").addEventListener("click",()=>$("importFile").click());
+$("importFile").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const data=JSON.parse(await f.text());
+    if(!data||!Array.isArray(data.done)||typeof data.notes!=="object")throw 0;
+    state={done:data.done,notes:data.notes||{},links:data.links||{},selected:null,customIdeas:Array.isArray(data.customIdeas)?data.customIdeas:[],hidden:Array.isArray(data.hidden)?data.hidden:[]};
+    for(const [id,val] of Object.entries(state.notes)){
+      if(typeof val==="string")state.notes[id]=val.trim()?[{date:new Date().toISOString(),text:val}]:[];
+      else if(!Array.isArray(val))state.notes[id]=[];
+    }
+    state.done=state.done.filter(n=>allActivities().some(a=>a.n===n));
+    state.hidden=state.hidden.filter(n=>allActivities().some(a=>a.n===n));
+    persist();renderGrid();renderDetail();renderHiddenPanel();toast("Backup imported");
+  }catch(err){toast("That backup file could not be read")}
+  e.target.value="";
+});
+function openIdeaEditor(id=null){
+  editingCustomId=id;
+  const a=id===null?null:state.customIdeas.find(x=>x.n===id);
+  $("editorTitle").textContent=a?"Edit your idea":"Add a new idea";
+  $("editorEyebrow").textContent=a?"UPDATE YOUR IDEA":"GROW YOUR IDEA LIBRARY";
+  $("saveIdeaBtn").textContent=a?"Save changes":"Save idea";
+  $("ideaTitle").value=a?a.title:"";
+  $("ideaCategory").value=a?a.category:"Creativity";
+  $("ideaEmoji").value=a?a.emoji:"💡";
+  $("ideaDesc").value=a?a.desc:"";
+  $("ideaStart").value=a?a.start:"";
+  $("ideaRemember").value=a?a.remember||"":"";
+  $("ideaEditor").hidden=false;$("ideaEditor").scrollIntoView({behavior:"smooth",block:"start"});$("ideaTitle").focus();
+}
+function closeIdeaEditor(){$("ideaEditor").hidden=true;$("ideaForm").reset();$("ideaEmoji").value="💡";editingCustomId=null}
+$("manageIdeasBtn").addEventListener("click",()=>openIdeaEditor());
+$("cancelIdeaBtn").addEventListener("click",closeIdeaEditor);
+$("ideaForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const title=$("ideaTitle").value.trim(),desc=$("ideaDesc").value.trim(),start=$("ideaStart").value.trim();
+  if(!title||!desc||!start){toast("Please fill in the title, explanation, and first step");return}
+  const isNew=editingCustomId===null;
+  const id=isNew?Math.max(14,...allActivities().map(a=>a.n))+1:editingCustomId;
+  const item={n:id,title,category:$("ideaCategory").value,emoji:$("ideaEmoji").value.trim()||"💡",desc,start,remember:$("ideaRemember").value.trim()};
+  if(isNew)state.customIdeas.push(item);else state.customIdeas=state.customIdeas.map(a=>a.n===id?item:a);
+  state.selected=id;if(isNew)state.hidden=state.hidden.filter(n=>n!==id);
+  persist();renderGrid();closeIdeaEditor();renderDetail();renderHiddenPanel();toast(isNew?"New idea added":"Idea updated");
+});
+renderGrid();renderProgress();renderDetail();renderHiddenPanel();
+</script>
+</body>
+</html>
